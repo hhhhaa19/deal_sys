@@ -47,4 +47,4 @@ if __name__ == '__main__':
     # 算法入口函数，这里创建一个线程来防止死循环
     # threading.Thread(target=deal, daemon=True).start()
     # 前端界面显示
-    app.run(debug=False, use_reloader=False)
+    app.run(debug=False, use_reloader=False,host='0.0.0.0', port=5000)#设置允许的访问ip

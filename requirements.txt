@@ -1,0 +1,6 @@
+binance_interface==2.0.5
+Flask==2.2.2
+mplfinance==0.12.10b0
+mysql_connector_repackaged==0.3.1
+pandas==2.0.3
+Werkzeug==2.3.7
