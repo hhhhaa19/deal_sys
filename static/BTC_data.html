@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交易平台仪表板</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #mainContainer {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #content {
+            flex-grow: 1;
+            display: flex;
+        }
+
+        #chartContainer {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        #leftPanel, #rightPanel {
+            width: 200px;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .info-section {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="mainContainer">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="trade_system.html">Trading Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="content">
+        <div id="leftPanel">
+            <div class="info-section">
+                <h5>Market Stats</h5>
+                <p id='openPrice'>openPrice: </p>
+                <p id='closePrice'>closePrice: </p>
+                <p id='lowPrice'>lowPrice: </p>
+                <p id='highPrice'>highPrice: </p>
+            </div>
+        </div>
+
+        <div id="chartContainer">
+            <!-- ECharts will be inserted here -->
+            <div id="mainChart" style="height: 500px;"></div>
+        </div>
+    </div>
+
+    <footer>
+        © 2023 Trading Dashboard
+    </footer>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: '/kline', // Adjust this to your API endpoint
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var myChart = echarts.init(document.getElementById('mainChart'));
+
+                var dates = data.categories;
+                var data = data.values.map(function (item) {
+                    return [item[0], item[1], item[2], item[3]];
+                });
+
+                function calculateMA(dayCount, data) {
+                    var result = [];
+                    for (var i = 0, len = data.length; i < len; i++) {
+                        if (i < dayCount - 1) {
+                            result.push('-');
+                            continue;
+                        }
+                        var sum = 0;
+                        for (var j = 0; j < dayCount; j++) {
+                            sum += parseFloat(data[i - j][1]);
+                        }
+                        result.push(sum / dayCount);
+                    }
+                    return result;
+                }
+
+                var option = {
+                    title: {
+                        text: 'BTC/USDT',
+                        left: 0
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross'
+                        },
+                        borderWidth: 1,
+                        borderColor: '#ccc',
+                        padding: 10,
+                        textStyle: {
+                            color: '#000'
+                        },
+                        position: function (pos, params, el, elRect, size) {
+                            var obj = {top: 10};
+                            obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
+                            return obj;
+                        },
+                        extraCssText: 'width: 170px'
+                    },
+                    legend: {
+                        data: ['K线', 'MA7', 'MA25']
+                    },
+                    grid: {
+                        left: '10%',
+                        right: '10%',
+                        bottom: '15%'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: dates
+                    },
+                    yAxis: {
+                        scale: true
+                    },
+                    series: [{
+                        name: 'K线',
+                        type: 'candlestick',
+                        data: data,
+                        itemStyle: {
+                            color: '#0C0',  // 阳线颜色
+                            color0: '#C00', // 阴线颜色
+                            borderColor: '#0C0',
+                            borderColor0: '#C00'
+                        }
+                    },
+                        {
+                            name: 'MA7',
+                            type: 'line',
+                            data: calculateMA(7, data),
+                            smooth: true,
+                            lineStyle: {
+                                opacity: 0.5
+                            }
+                        },
+                        {
+                            name: 'MA25',
+                            type: 'line',
+                            data: calculateMA(25, data),
+                            smooth: true,
+                            lineStyle: {
+                                opacity: 0.5
+                            }
+                        }]
+                };
+                var latestData = data[data.length - 1];
+                $('#openPrice').append(latestData[0]);
+                $('#closePrice').append(latestData[1]);
+                $('#lowPrice').append(latestData[2]);
+                $('#highPrice').append(latestData[3]);
+                myChart.setOption(option);
+            },
+            error: function (error) {
+                console.error('Error fetching the chart data:', error);
+            }
+        });
+    });
+</script>
+</body>
+</html>

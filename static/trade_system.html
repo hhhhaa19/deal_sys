@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>admin</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href=../static/css/nprogress.css">
+    <link rel="stylesheet" href="css/admin.css">
+
+
+</head>
+<body>
+
+<div class="big-wrap">
+    <div id="content-wrap" class="content-wrap">
+        <header id="header" class="trans-all-2">
+            <button id="drawer-toggle" type="button" class="btn btn-default btn-lg ">
+                <i class="fa fa-list " aria-hidden="true"></i>
+            </button>
+            <div class="login-panel" style="margin-left: auto;">
+                <div class="dropdown pull-right">
+                    <button type="button" class="btn dropdown-toggle" id="dropdown-user"
+                            data-toggle="dropdown" style="outline: none; box-shadow: none;font-size: 15px">
+                        用户：管理员
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-user">
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" href="/static/index.html">退出</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <div id="container" class="main-content container">
+            <table class="table table-bordered table-hover table-responsive" id="ordersTable">
+                <h2 style="padding: 16px 0;text-align: center">历史委托订单 </h2>
+                <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>交易对</th>
+                    <th>操作类型</th>
+                    <th>价格</th>
+                    <th>数量</th>
+                    <th>总价</th>
+                    <th>手续费</th>
+                    <th>手续费资产</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <img src="img/bitcoin_kline_chart.png"
+             style="display: block; margin: auto; width: 50%; height: auto;">
+    </div>
+
+    <aside id="drawer" class="trans-all-2">
+        <div class="drawer-head">
+            <i class="logo fa fa-github-alt fa-lg" aria-hidden="true"></i>
+            <a href="trade_system.html" class="logo-text">内部管理员系统</a>
+        </div>
+
+        <ul class="menu-parent menu-root">
+            <li class="menu-child" style="background: #08415C">
+                <a href="one.html"
+                   class="menu-link"><i class="menu-icon fa fa-home"></i><span class="menu-desc">首页</span></a>
+            </li>
+
+            <li class="menu-child " style="background: #585481">
+                <a href="two.html"
+                   class="menu-link"><i class="menu-icon fa fa-bar-chart"></i><span class="menu-desc">监控台</span></a>
+            </li>
+
+            <li class="menu-child">
+                <a class="menu-link">
+                    <i class="menu-icon fa fa-flask"></i>
+                    <span class="menu-desc">比特币当前价格</span>
+                    <span class="menu-more"><i class="fa fa-chevron-right"></i></span>
+                </a>
+                <ul class="menu-parent">
+                    <li class="menu-child"><a href="BTC_data.html" class="menu-link">12小时制</a></li>
+                    <li class="menu-child"><a href="BTC_data.html" class="menu-link">预留接口1</a></li>
+                    <li class="menu-child"><a href="BTC_data.html" class="menu-link">预留接口2</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-child">
+                <a class="menu-link">
+                    <i class="menu-icon fa fa-trash-o"></i>
+                    <span class="menu-desc">账户信息</span>
+                    <span class="menu-more"><i class="fa fa-chevron-right"></i></span>
+                </a>
+                <ul class="menu-parent">
+                    <li class="menu-child"><a href="balance.html" class="menu-link">当前钱包总览</a></li>
+                    <li class="menu-child"><a href="BTC_data.html" class="menu-link">预留接口</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+</div>
+
+<script type="text/javascript">
+    function getCookie(c_name) {
+        if (document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(c_name + "=")
+            if (c_start != -1) {
+                c_start = c_start + c_name.length + 1
+                c_end = document.cookie.indexOf(";", c_start)
+                if (c_end == -1) c_end = document.cookie.length
+                return unescape(document.cookie.substring(c_start, c_end))
+            }
+        }
+        return ""
+    }
+
+    function setCookie(c_name, value, expiredays) {
+        var exdate = new Date()
+        exdate.setDate(exdate.getDate() + expiredays)
+        document.cookie = c_name + "=" + escape(value) +
+            ((expiredays == null) ? "" : "; expires=" + exdate.toGMTString())
+    }
+
+
+    function hasClass(element, Hclass) {
+        var patt = new RegExp(Hclass)
+        return patt.test(element.className)
+    }
+
+    function addClass(element, Hclass) {
+        if (!hasClass(element, Hclass)) {
+            element.className += ' ' + Hclass;
+        }
+    }
+
+    function removeClass(element, Hclass) {
+        if (hasClass(element, Hclass)) {
+            var re = element.className
+            re = re.replace(Hclass, '');
+            element.className = re
+        }
+    }
+
+    //保证关闭了侧拉栏之后，刷新浏览器测拉栏不会跑出来，为了减少卡顿，使用原生
+    if (getCookie('drawerIsClosed')) {
+        addClass(document.getElementById('drawer'), 'drawer-closed')
+        addClass(document.getElementById('content-wrap'), 'content-wrap-full')
+    }
+
+</script>
+<!--import script-->
+<script type="application/javascript" src="js/jquery.min.js"></script>
+<script type="application/javascript" src="js/jquery.pjax.js"></script>
+<script type="application/javascript" src="js/bootstrap.js"></script>
+<script type="application/javascript" src="js/nprogress.js"></script>
+<script type="application/javascript" src="js/admin.js"></script>
+<script type="application/javascript" src="js/trade.js"></script>
+</body>
+</html>
+

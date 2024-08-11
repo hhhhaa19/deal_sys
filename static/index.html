@@ -1,0 +1,365 @@
+﻿<!DOCTYPE html>
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+    <!-- =====  BASIC PAGE NEEDS  ===== -->
+    <meta charset="utf-8">
+    <title>Home</title>
+    <!-- =====  SEO MATE  ===== -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- =====  MOBILE SPECIFICATION  ===== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width">
+    <!-- =====  CSS  ===== -->
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/animation.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/kline.css">
+    <!-- =====  SCRIPT START  ===== -->
+    <script src="../static/js/jQuery_v3.1.1.min.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/owl.carousel.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/letters-type.js"></script>
+    <script src="../static/js/menu.js"></script>
+    <script src="../static/js/custom.js"></script>
+    <script src="../static/js/particles/particles.js"></script>
+    <script src="../static/js/particles/app.js"></script>
+    <script src="../static/js/circle-progress.js"></script>
+    <script src="../static/js/circle-progress-examples.js"></script>
+    <!---<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAT3mI0RI16q19Oxv93gSxN0cF0wfxWN6w"></script>--->
+    <script src="../static/js/parallax.js"></script>
+    <script src="../static/js/jquery.easeScroll.js"></script>
+    <script src="../static/js/echarts.min.js"></script>
+    <script src="../static/js/kline_chart.js"></script>
+</head>
+
+<body id="home2" class="home2">
+
+<script type="text/javascript">
+    $("html").easeScroll();
+    // Add scrollspy to <body>
+    $('body').scrollspy({target: '#menu'})
+    $("#menu ul li a[href^='#'], .home-arrow-down a").on('click', function (e) {
+        // prevent default anchor click behavior
+        e.preventDefault();
+        // store hash
+        var hash = this.hash;
+        // animate
+        $('html, body').animate({
+            scrollTop: $(hash).offset().top
+        }, 1500, function () {
+            // when done, add hash to url
+            // (default click behaviour)
+            window.location.hash = hash;
+        });
+    });
+</script>
+
+<!-- =====  LODER  ===== -->
+<div class="loder"></div>
+<div class="wrapper">
+    <!-- =====  HEADER START  ===== -->
+    <header id="header">
+        <div class="header navbar">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header pull-left"><a class="navbar-brand" href="../static/trade_system.html"> <img
+                        alt="Bitcoin"
+                        src="../static/img/logo2.png">
+                </a></div>
+                <!-- Collection of nav links, forms, and other content for toggling -->
+                <div id="navbarCollapse" class="navbar-collapse navbar-right">
+                    <nav id="menu" class='collapse'>
+                        <!-- Navigation Menu -->
+                        <ul class="nav">
+                            <li class="active"><a href="#home2">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#service">Service</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                        <!--End Navigation Menu -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- =====  HEADER END  ===== -->
+    <!-- =====  BANNER STRAT  ===== -->
+    <div class="banner">
+        <div id="particles-js"></div>
+        <div class="banner-detail ">
+            <div class="cd-intro">
+                <h1 class="cd-headline letters type">
+            <span class="cd-words-wrapper waiting">
+              <b class="is-visible">Choose Progress</b>
+              <b>Become Successful!</b>
+            </span>
+                </h1>
+                <p class="mt_20 light">Welcome to our Bitcoin Auto Trading Platform! <br/>Utilizing cutting-edge data
+                    analysis and sentiment analysis of news, we offer <br/>automated hourly Bitcoin trading to help you
+                    stay ahead of market trends.</p>
+                <button class="custom-btn custom-btns light" type="button"><span>Learn More</span></button>
+                <div class="home-arrow-down"><a href="#about" class="btn"><i class="fa fa-long-arrow-down"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- =====  BANNER END  ===== -->
+    <!-- =====  ABOUT START  ===== -->
+    <section>
+        <div id="about" class="about ptb_100">
+            <div class="container">
+                <div class="about-inner ">
+                    <div class="row">
+                        <div class="col-md-5"></div>
+                        <div class="col-md-7">
+                            <div class="about-text ml_60">
+                                <div class="heading-part ">
+                                    <h2 class="main_title about-heading mb_40 pb_20">New Currency - New Lifestyle!</h2>
+                                </div>
+                                <h4 class="mb_20">Bitcoin is a revolutionary invention of the last decade. Its essential
+                                    meaning is money digitization</h4>
+                                <p>Bitcoin, as the first decentralized digital currency, is redefining the future of
+                                    transactions with its high security, global accessibility, and limited supply.
+                                    Without relying on central authorities, it uses blockchain technology to ensure
+                                    transparent and immutable transaction records. This positions Bitcoin as a crucial
+                                    pillar in the global financial system and the future digital economy.</p>
+                                <button class="custom-btn custom-btns mtb_20" type="button"><span>View More Info</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =====  ABOUT END  ===== -->
+    <!-- =====  WORK WITH US STRAT  ===== -->
+    <section class="text-center parallax" data-source-url="../static/img/Parallax01.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 col-sm-12 ptb_100">
+                    <div class="story_detail"
+                         style="background-color: transparent; padding: 20px; border-radius: 10px;">
+                        <h2 class="main_title light mb_20"
+                            style="color: #333; font-family: 'Arial', sans-serif; text-align: center;">Key Features of
+                            Us<span class="red">?</span></h2>
+                        <div class="service_item"
+                             style="background-color: transparent; margin-bottom: 20px; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                            <h4 class="light" style="font-family: 'Arial', sans-serif; color: #666;">Data Collection:
+                                Real-time collection of Bitcoin-related data from news sources and social media</h4>
+                        </div>
+                        <div class="service_item"
+                             style="background-color: transparent; margin-bottom: 20px; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                            <h4 class="light" style="font-family: 'Arial', sans-serif; color: #666;">Sentiment Analysis:
+                                Advanced natural language processing and machine learning techniques for sentiment
+                                analysis</h4>
+                        </div>
+                        <div class="service_item"
+                             style="background-color: transparent; margin-bottom: 20px; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                            <h4 class="light" style="font-family: 'Arial', sans-serif; color: #666;">Trading Strategy:
+                                Automatic adjustment of trading strategies based on sentiment analysis and market
+                                data</h4>
+                        </div>
+                        <div class="service_item"
+                             style="background-color: transparent; margin-bottom: 20px; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                            <h4 class="light" style="font-family: 'Arial', sans-serif; color: #666;">Automated Trading:
+                                Hourly execution of trades to ensure you never miss an opportunity</h4>
+                        </div>
+                    </div>
+                    <button class="custom-btn custom-btns light mt_20" id="button_custom" type="button"><span>JOIN US NOW</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =====  WORK WITH US END  ===== -->
+    <!-- =====  SERVICES STRAT  ===== -->
+    <section id="service" class="pt_100 pb_50">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-part ">
+                        <h2 class="main_title mb_20">Technical Advantages</h2>
+                        <p class="mb_50">Quickly react to market sentiment changes and seize the best trading
+                            opportunities </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Services  -->
+            <div class="row">
+                <div class="col-md-4 col-xs-6 mb_50">
+                    <div class="service">
+                        <div class="icon-top"><img src="../static/img/serviceicon/service-1.png" alt="#"></div>
+                        <h4 class="mtb_20">Safe And Secure</h4>
+                        <p>Our platform adheres to industry best practices and regulatory standards with secure APIs for
+                            all external communications to ensure trading safely</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-6 mb_50">
+                    <div class="service">
+                        <div class="icon-top"><img src="../static/img/serviceicon/service-2.png" alt="#"></div>
+                        <h4 class="mtb_20">Efficient Response</h4>
+                        <p> Quickly react to market sentiment changes and seize the best trading opportunities with
+                            continuously instant collected data from various sources </p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-6 mb_50">
+                    <div class="service">
+                        <div class="icon-top"><img src="../static/img/serviceicon/service-3.png" alt="#"></div>
+                        <h4 class="mtb_20">Sentiment Analysis</h4>
+                        <p>The trading strategies are dynamically adjusted based on real-time analysis,which ensures
+                            changes in market conditions can be promptly responded</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-6 mb_50">
+                    <div class="service">
+                        <div class="icon-top"><img src="../static/img/serviceicon/service-4.png" alt="#"></div>
+                        <h4 class="mtb_20">Fast Execution</h4>
+                        <p> By automating the decision-making process, the platform which is designed for low latency
+                            trading eliminates delays associated with manual trading</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-6 mb_50">
+                    <div class="service">
+                        <div class="icon-top"><img src="../static/img/serviceicon/service-5.png" alt="#"></div>
+                        <h4 class="mtb_20">Dynamic Trading Strategies</h4>
+                        <p>In addition to AI models, we utilize innovative trading algorithm. This blend of
+                            methodologies provides a more comprehensive approach to trading.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-6 mb_50">
+                    <div class="service">
+                        <div class="icon-top"><img src="../static/img/serviceicon/service-6.png" alt="#"></div>
+                        <h4 class="mtb_20">Risk Management</h4>
+                        <p>Incorporating risk management techniques, the platform adjusts trading strategies to minimize
+                            potential losses while maximizing potential gains.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Services -->
+        </div>
+        <!-- =====  WORK WITH US STRAT  ===== -->
+        <section class="text-center bg-dark">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 col-sm-12 ptb_100">
+                        <div class="story_detail">
+                            <h2 class="main_title light mb_20">Come and Join Us<span class="red">?</span></h2>
+                            <h4 class="mtb_20 light"><a class="light">Trust in our expertise and let us manage your
+                                funds while you enjoy the returns.
+                                We are committed to leveraging intelligent trading technology to generate the highest
+                                possible returns for you,
+                                achieving financial freedom. Entrusting us with your funds is the first step toward
+                                wealth growth.</a></h4>
+                        </div>
+                        <button class="custom-btn custom-btns light mt_20" id="button_custom" type="button"><span>JOIN US NOW</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- =====  WORK WITH US END  ===== -->
+        <!-- =====  CONTACT START  ===== -->
+        <section id="contact" class="ptb_100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb_20 col-md-offset-3 text-center">
+                        <div class="heading-part ">
+                            <h2 class="main_title mb_20">Get In Touch</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- contact  -->
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 contact-form">
+                        <!-- Contact FORM -->
+                        <div id="contact_form">
+                            <form id="contact_body" method="post" action="contact_me.php">
+                                <div class="col-md-6 col-xs-12">
+                                    <input class="full-with-form mt_30" type="text" name="name" placeholder="Name"
+                                           data-required="true"/>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <input class="full-with-form mt_30" type="email" name="email"
+                                           placeholder="Email Address" data-required="true"/>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <input class="full-with-form mt_30" type="text" name="phone1"
+                                           placeholder="Phone Number"
+                                           maxlength="15" data-required="true"/>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <input class="full-with-form mt_30" type="text" name="subject" placeholder="Subject"
+                                           data-required="true">
+                                </div>
+                                <div class="col-xs-12">
+                                <textarea class="full-with-form mt_30" name="message" placeholder="Message"
+                                          data-required="true"></textarea>
+                                </div>
+                                <button class="custom-btn custom-btns mt_60" type="submit" tar><span>Send Message</span>
+                                </button>
+                            </form>
+                            <div id="contact_results"></div>
+                        </div>
+                        <!-- END Contact FORM -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- =====  CONTACT END  ===== -->
+        <!-- =====  FOOTER START  ===== -->
+        <div class="footer bg-dark ptb_100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="footer-link">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Service</a></li>
+                                <li><a href="#">Work</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="social_icon">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- =====  WRAPPER END  ===== -->
+<script>
+    $(function () {
+        $("#button_custom").click(function () {
+            var target = $('#contact');
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top
+                }, 1000); // 1000 milliseconds = 1 second
+            }
+        });
+    })
+
+</script>
+<!-- =====  SCRIPT END  ===== -->
+</body>
+
+</html>

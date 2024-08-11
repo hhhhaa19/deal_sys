@@ -1,0 +1,37 @@
+/* 应用于 id="kline" 的组件 */
+#kline {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+#kline .chart {
+    width: 90%;    /* 或根据页面设计调整 */
+    height: 600px; /* 提供足够的空间以便图表可见 */
+}
+
+#kline header {
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+}
+
+#kline main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media (max-width: 600px) {
+    #kline .chart {
+        height: 200px;  /* 在小屏幕设备上调整高度 */
+        width: 100%;    /* 在小屏幕设备上调整宽度以充满容器 */
+    }
+}
