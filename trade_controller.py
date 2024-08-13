@@ -4,13 +4,13 @@ import math
 from binance_interface.api import SPOT
 from binance_interface.app.utils import eprint
 import logging
-
+from config import Config
 # 配置日志记录器
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 proxy_host = None
-key = 'ugsuQUG1mQfBLDJACLhLkUmlwqtAEPFRHBg7MzKzuTMuBabf2XzlnIoJ31rVIEt6'
-secret = 'YpGfU1TxEdmJnOGvkxo5TUGC8Tg9L2tkkqPLtkwQVTHSf1y80aUEPppofeLU2Lof'
+key = Config.BIAN_KEY
+secret = Config.BIAN_SECRET
 
 spot = SPOT(
     key=key, secret=secret,
@@ -115,5 +115,6 @@ def get_account_balance():
 
 
 if __name__ == '__main__':
-    print(get_balance("USDT"))
-    print(get_account_balance())
+    # print(get_balance("USDT"))
+    # print(get_account_balance())
+    print(key)

@@ -1,5 +1,6 @@
 import mysql.connector
 from datetime import datetime
+from config import Config
 import logging
 
 # 配置日志
@@ -8,10 +9,10 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 try:
     # 创建数据库连接
     connection = mysql.connector.connect(
-        host='127.0.0.1',  # 主机名或IP地址
-        user='root',  # 用户名
-        password='WJT164673!',  # 密码
-        database='deal_sys'  # 数据库名
+        host=Config.MYSQL_HOST,  # 主机名或IP地址
+        user=Config.MYSQL_USER,  # 用户名
+        password=Config.MYSQL_PASSWORD,  # 密码
+        database=Config.MYSQL_DB  # 数据库名
     )
     cursor = connection.cursor()
     logging.info("Successfully connected to the database")
