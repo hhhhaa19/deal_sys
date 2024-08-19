@@ -100,7 +100,7 @@
 <script>
     $(document).ready(function() {
         $.ajax({
-            url: '/kline', // Adjust this to your API endpoint
+            url: '/kline'+ location.search, // Adjust this to your API endpoint
             type: 'GET',
             dataType: 'json',
             success: function (data) {

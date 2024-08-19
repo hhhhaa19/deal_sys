@@ -18,13 +18,14 @@ def index():
 
 @app.route('/kline')
 def kline():
+    trading_pair = request.args.get('trading_pair')
     # 假设startTime和endTime是定义好的时间戳
     startTime = int(time.time() - 36000) * 1000  # 1小时之前
     endTime = int(time.time()) * 1000  # 当前时间
-    BTC_kline = get_kline(startTime, endTime)
+    BTC_kline = get_kline(trading_pair,startTime, endTime)
     if BTC_kline == None:
         return None
-    generate_kline_chart(BTC_kline)
+    #generate_kline_chart(BTC_kline)
     return jsonify(BTC_kline)
 
 

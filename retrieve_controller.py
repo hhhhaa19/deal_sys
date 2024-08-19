@@ -1,8 +1,10 @@
 # 所有函数用于发送请求,获取数据，这里的接口的调用不需要API_KEY
 import time
 from binance_interface.api import SPOT
+from binance_interface.app import BinanceSPOT
 from binance_interface.app.utils import eprint
 import logging
+from config import Config
 
 # 配置日志记录器
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -13,9 +15,33 @@ proxy_host = proxy_host
 spot = SPOT(
 )
 market = spot.market
+binanceSPOT = BinanceSPOT(
+    key=Config.BIAN_KEY, secret=Config.BIAN_SECRET,
+    proxy_host=proxy_host
+)
+binance_market = binanceSPOT.market
+
 
 # 获取当前交易规范，在发送交易前做一个验证
-exchangeInfo_result = market.get_exchangeInfo()
+
+
+def get_market_lot_size_step_size(symbol):
+    """
+    根据交易对名称从MARKET_LOT_SIZE中获取市价单交易量的最小变动单位。
+    :param symbol: 交易对名称，例如'BTCUSDT'
+    :return: 市价单交易量的最小变动单位，如果未找到则返回None
+    """
+    exchangeInfo_result = binance_market.get_exchangeInfo(symbol)
+    data = exchangeInfo_result.get('data', {})
+    if data.get('symbol') == symbol:
+        for filter in data.get('filters', []):
+            if filter.get('filterType') == 'LOT_SIZE':
+                logging.info(f"The step size for {symbol} in MARKET_LOT_SIZE is: {filter.get('stepSize')}")
+                return filter.get('stepSize')
+    # 如果未找到交易对或MARKET_LOT_SIZE过滤器，返回None
+    return None
+
+
 
 
 def get_price_by_symbol(symbol):
@@ -24,13 +50,13 @@ def get_price_by_symbol(symbol):
         logging.warning("获取数据失败: %s", spot_goods_price.get('msg'))
         return None
     price = spot_goods_price.get('data')['price']
-    logging.info("当前比特币价格: %s", price)
+    logging.info("当前%s价格: %s", symbol, price)
     return price
 
 
-def get_kline(startTime, endTime):
+def get_kline(trading_pair, startTime, endTime):
     kline_result = market.get_klines(
-        symbol='BTCUSDT',
+        symbol=trading_pair,
         interval='1m',
         startTime=startTime,
         endTime=endTime
@@ -92,6 +118,7 @@ def generate_kline_chart(data):
 
 
 if __name__ == '__main__':
-    startTime = int(time.time() - 48000) * 1000  # 10小时之前
-    endTime = int(time.time()) * 1000  # 当前时间
-    generate_kline_chart(get_kline(startTime, endTime))
+    # startTime = int(time.time() - 48000) * 1000  # 10小时之前
+    # endTime = int(time.time()) * 1000  # 当前时间
+    # generate_kline_chart(get_kline(startTime, endTime))
+    print(get_market_lot_size_step_size("XRPUSDT"))
