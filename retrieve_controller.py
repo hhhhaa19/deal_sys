@@ -10,7 +10,7 @@ from config import Config
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # 不设置代理
-proxy_host = None
+proxy_host = Config.BIAN_PROXY
 proxy_host = proxy_host
 spot = SPOT(
 )

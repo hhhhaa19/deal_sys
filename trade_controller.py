@@ -10,7 +10,7 @@ from retrieve_controller import *
 # 配置日志记录器
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-proxy_host = None
+proxy_host = Config.BIAN_PROXY
 key = Config.BIAN_KEY
 secret = Config.BIAN_SECRET
 
