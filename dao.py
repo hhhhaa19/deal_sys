@@ -7,13 +7,9 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 try:
+    db_config = Config.db_config
     # 创建数据库连接
-    connection = mysql.connector.connect(
-        host=Config.MYSQL_HOST,  # 主机名或IP地址
-        user=Config.MYSQL_USER,  # 用户名
-        password=Config.MYSQL_PASSWORD,  # 密码
-        database=Config.MYSQL_DB  # 数据库名
-    )
+    connection = mysql.connector.connect(**db_config)
     cursor = connection.cursor()
     logging.info("Successfully connected to the database")
 

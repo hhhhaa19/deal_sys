@@ -1,6 +1,8 @@
 import logging
 import time
 from dao import *
+from Model_Infer import *
+from bian import *
 
 # 配置日志记录器
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -9,17 +11,20 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 def deal():
     # 由于只对比特币交易，这里写死，后续可以拓展
     symbol_sell = 'USDT'#结算货币
-    trading_pair = 'DOGEUSDT'
-    symbol_buy = 'DOGE'
-    # 数据获取，后续数据组代码替换
-    # todo
+    trading_pair = 'BTCUSDT'
+    symbol_buy = 'BTC'
     while True:
         # 具体算法,输出应该是action,1为买,2为卖,0为hold
-        # todo
-        action = 2
+        action = get_action(Config.db_config.get('host'),Config.db_config.get('user'),Config.db_config.get('password'),Config.db_config.get('database'),Config.MODEL_LOCATION)
         # 实际交易
         trade_deal(symbol_sell, trading_pair, symbol_buy,action)
 
+        # 获取当前时间
+        current_time = datetime.now()
+
+        # 将时间格式化为字符串
+        formatted_time = current_time.strftime('%Y-%m-%d')
+        update_database(formatted_time,Config.db_config)
         # 存储当前账户余额
         store_info(symbol_sell)
         time.sleep(3600)
