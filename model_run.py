@@ -4,7 +4,9 @@ from sklearn.preprocessing import StandardScaler
 import torch
 from stock_env import stock
 import io
-#本代码仅用于测试
+
+
+# 本代码仅用于测试
 
 class CPU_Unpickler(pickle.Unpickler):
     def find_class(self, module, name):
@@ -31,18 +33,14 @@ def model_run():
     df = pd.read_excel(file_path)
     df = df.reset_index(drop=True)  # 去除前几天没有均线信息
     df["Real_close"] = df["close"]
-
-    df_train = df.iloc[20000:40000]
+    print(df.columns)
     df_test = df.iloc[40000:42500]
     env_test = stock(df_test)
     scaler = StandardScaler()
     columns_to_normalize = ['open', 'high', 'low', 'close', 'volume']
-    df_train[columns_to_normalize] = scaler.fit_transform(df_train[columns_to_normalize])
     df_test[columns_to_normalize] = scaler.fit_transform(df_test[columns_to_normalize])
-    h_out = (torch.zeros([1, 1, 128], dtype=torch.float).to(device),
-             torch.zeros([1, 1, 128], dtype=torch.float).to(device))
-    h_in = h_out
-
+    h_in = (torch.zeros([1, 1, 128], dtype=torch.float).to(device),
+            torch.zeros([1, 1, 128], dtype=torch.float).to(device))
     # 获取环境的初始观察
     observation = env_test.reset()
     observation_tensor = torch.from_numpy(observation).float().to(device)  # 转换为张量并移至正确的设备
@@ -57,4 +55,4 @@ def model_run():
 
 
 if __name__ == '__main__':
-    model_run()
+    print(model_run())

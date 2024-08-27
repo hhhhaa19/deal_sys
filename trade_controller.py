@@ -23,7 +23,6 @@ trade = spot.trade
 # 存的是账户信息
 account_result = account.get_account()
 if account_result.get('code') != 200:
-    print(account_result.get('code'))
     logging.warning("获取账户数据失败: %s", account_result.get('msg'))
     account_result = None
 else:
@@ -56,7 +55,6 @@ def create_buy_order(trading_pair, action, quantity):
         side=action,
         type='MARKET',
     )
-    print(quantity)
     if set_order_result.get('code') != 200:
         logging.error("订单创建失败，错误原因%s", set_order_result.get('msg'))
         return
@@ -83,7 +81,7 @@ def order_by_symbol(symbol):
     result = []
     open_order_result = trade.get_openOrders(symbol='')
     if open_order_result.get('code') != 200:
-        print("查询订单错误")
+        logging.error("查询订单错误")
         return result
 
     for order in open_order_result.get('data'):

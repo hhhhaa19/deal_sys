@@ -73,6 +73,10 @@ import time
 from datetime import datetime
 import mysql.connector
 import pytz
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 
 def fetch_history_klines(symbol, start, end, interval):
     url = 'https://api.binance.com/api/v3/klines'
@@ -86,9 +90,11 @@ def fetch_history_klines(symbol, start, end, interval):
     response = requests.get(url, params=params)
     return response.json()
 
+
 def connect_db(db_config):
     connection = mysql.connector.connect(**db_config)
     return connection
+
 
 def insert_bars_data(database, symbol, time, open_price, high_price, low_price, close_price, volume, db_config):
     connection = connect_db(db_config)
@@ -104,10 +110,11 @@ def insert_bars_data(database, symbol, time, open_price, high_price, low_price, 
     if not exists:
         cursor.execute(query, values)
     else:
-        print(f"Data already exists for {utc_dt}")
+        logging.warning(f"Data already exists for {utc_dt}")
     connection.commit()
     cursor.close()
     connection.close()
+
 
 def update_database(start_date, db_config):
     symbol = 'BTCUSDT'
@@ -116,18 +123,18 @@ def update_database(start_date, db_config):
     now = datetime.now(pytz.utc).replace(minute=0, second=0, microsecond=0)
     end_time = int(now.timestamp() * 1000)
     current = start_time
-    print(f"Current UTC time rounded to the previous hour: {now}")
-    print(f"End time as a timestamp in milliseconds: {end_time}")
+    logging.info(f"Current UTC time rounded to the previous hour: {now}")
 
     while current < end_time:
-        next_time = min(current + 30*24*60*60*1000, end_time)  # 每次获取30天的数据
+        next_time = min(current + 30 * 24 * 60 * 60 * 1000, end_time)  # 每次获取30天的数据
         data = fetch_history_klines(symbol, current, next_time, interval)
-        print(data)
         current = next_time + 1
         for kline in data:
-            insert_bars_data('historical_bars_data3_1h_bian_new', symbol, kline[0], kline[1], kline[2], kline[3], kline[4], kline[5], db_config)
+            insert_bars_data('historical_bars_data3_1h_bian_new', symbol, kline[0], kline[1], kline[2], kline[3],
+                             kline[4], kline[5], db_config)
         # 根据API速率限制，可适当增加延时
         time.sleep(1)
+
 
 if __name__ == "__main__":
     db_config = {
@@ -138,4 +145,3 @@ if __name__ == "__main__":
     }
     start_date = "2024-08-26"  # 起始日期
     update_database(start_date, db_config)
-

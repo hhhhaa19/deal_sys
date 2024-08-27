@@ -27,10 +27,10 @@ def get_last_24_hours_close_prices(db_config):
     return df
 
 
+# wjt修改
 def load_model(model_path, n_features, n_actions, device):
-    model = DQN(n_features, n_actions).to(device)
-    model.load_state_dict(torch.load(model_path))
-    model.eval()
+    model = load_model_from_file(model_path)
+    model.to(device)
     return model
 
 
@@ -43,7 +43,6 @@ def get_action(host, user, password, database, model_path):
     }
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Using device: {device}")
 
     n_features = 24  # 使用过去24小时的close价格
     n_actions = 3  # 动作数
@@ -54,24 +53,19 @@ def get_action(host, user, password, database, model_path):
     # 从数据库中获取数据
     df = get_last_24_hours_close_prices(db_config)
     df["Real_close"] = df["close"]
-
     env = stock(df)
+    scaler = StandardScaler()
+    columns_to_normalize = ['open', 'high', 'low', 'close', 'volume']
+    df[columns_to_normalize] = scaler.fit_transform(df[columns_to_normalize])
+    h_in = (torch.zeros([1, 1, 128], dtype=torch.float).to(device),
+            torch.zeros([1, 1, 128], dtype=torch.float).to(device))
 
     # 获取初始状态
-    observation = env.get_state(env.window_size)
-
-    # 检查 observation 是否为 numpy 数组
-    if not isinstance(observation, np.ndarray):
-        raise ValueError("observation is not a numpy array")
+    observation = env.reset()
+    observation_tensor = torch.from_numpy(observation).float().to(device)
 
     # 将状态转换为 PyTorch tensor
-    observation_tensor = torch.tensor(observation[np.newaxis, :], dtype=torch.float32).to(device)
-
-    # 使用模型进行预测
-    with torch.no_grad():
-        prediction = model(observation_tensor)
-
-    print("Q-values for each action:", prediction)
-
-    action = torch.argmax(prediction).item()
+    prob, h_out = model.pi(observation_tensor, h_in)
+    prob = prob.view(-1)
+    action = torch.argmax(prob).item()
     return action
