@@ -1,3 +1,5 @@
+import logging
+
 import numpy as np
 import torch
 from RL_brain2 import DQN
@@ -6,6 +8,10 @@ import pandas as pd
 from stock_env import *
 from RL_brain2 import DeepQNetwork
 from model_run import *
+from dao import *
+
+# 配置日志记录器
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def get_last_24_hours_close_prices(db_config):
@@ -34,7 +40,7 @@ def load_model(model_path, n_features, n_actions, device):
     return model
 
 
-def get_action(host, user, password, database, model_path):
+def get_action(host, user, password, database, model_path,h_in):
     db_config = {
         'host': host,
         'user': user,
@@ -49,6 +55,8 @@ def get_action(host, user, password, database, model_path):
 
     # 加载模型
     model = load_model(model_path, n_features, n_actions, device)
+    logging.info("模型加载成功")
+
 
     # 从数据库中获取数据
     df = get_last_24_hours_close_prices(db_config)
@@ -57,9 +65,7 @@ def get_action(host, user, password, database, model_path):
     scaler = StandardScaler()
     columns_to_normalize = ['open', 'high', 'low', 'close', 'volume']
     df[columns_to_normalize] = scaler.fit_transform(df[columns_to_normalize])
-    h_in = (torch.zeros([1, 1, 128], dtype=torch.float).to(device),
-            torch.zeros([1, 1, 128], dtype=torch.float).to(device))
-
+    logging.info("输入模型的数据加载成功")
     # 获取初始状态
     observation = env.reset()
     observation_tensor = torch.from_numpy(observation).float().to(device)
@@ -68,4 +74,5 @@ def get_action(host, user, password, database, model_path):
     prob, h_out = model.pi(observation_tensor, h_in)
     prob = prob.view(-1)
     action = torch.argmax(prob).item()
-    return action
+    logging.info("当前action")
+    return action, h_out
