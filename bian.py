@@ -87,8 +87,26 @@ def fetch_history_klines(symbol, start, end, interval):
         'endTime': end,
         'limit': 500
     }
-    response = requests.get(url, params=params)
-    return response.json()
+
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()  # 如果响应状态码不是 200，会引发 HTTPError 异常
+        data = response.json()
+
+        if not isinstance(data, list):
+            logging.error(f"Unexpected response format: {data}")
+            return []
+
+        return data
+
+    except requests.exceptions.HTTPError as http_err:
+        logging.error(f"HTTP error occurred: {http_err}")
+    except requests.exceptions.RequestException as req_err:
+        logging.error(f"Request error occurred: {req_err}")
+    except ValueError as json_err:
+        logging.error(f"JSON decoding error occurred: {json_err}")
+
+    return []  # 出现异常时返回空列表
 
 
 def connect_db(db_config):
@@ -133,7 +151,7 @@ def update_database(start_date, db_config):
             insert_bars_data('historical_bars_data3_1h_bian_new', symbol, kline[0], kline[1], kline[2], kline[3],
                              kline[4], kline[5], db_config)
         # 根据API速率限制，可适当增加延时
-        time.sleep(1)
+        time.sleep(5)
 
 
 if __name__ == "__main__":
@@ -143,5 +161,5 @@ if __name__ == "__main__":
         'password': 'WJT164673!',
         'database': 'deal_sys'
     }
-    start_date = "2024-08-26"  # 起始日期
+    start_date = "2024-07-26"  # 起始日期
     update_database(start_date, db_config)
