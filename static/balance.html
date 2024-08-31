@@ -7,14 +7,41 @@
     <link rel="stylesheet" href="../static/css/balance.css">
     <script src="../static/js/jquery.min.js"></script>
     <script src="../static/js/echarts.min.js"></script>
+    <style>
+        /* 添加右上角按钮的样式 */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
+    <!-- 添加返回按钮 -->
+    <button class="back-button" onclick="goBack()">Back to Trade System</button>
+
     <h1 class="title">Current Wallet Balance</h1>
     <div id="wallet-balances" class="balances"></div>
     <div id="chart" class="chart"></div>
     <div id="cumulative-return" class="cumulative-return"></div>
 </div>
 <script src="../static/js/balance.js"></script>
+<script>
+    // 添加返回按钮的点击事件处理函数
+    function goBack() {
+        window.location.href = 'trade_system.html';
+    }
+</script>
 </body>
 </html>

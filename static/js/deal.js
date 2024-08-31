@@ -13,7 +13,8 @@ $(document).ready(function () {
                     alert('交易对已更新为: ' + newPair);
                 },
                 error: function (response) {
-                    alert('更新失败: ' + response.responseJSON.error);
+                    var errorMessage = response.responseJSON ? response.responseJSON.error : response.responseText;
+                    alert('更新失败: ' + errorMessage);
                 }
             });
         } else {
@@ -21,7 +22,7 @@ $(document).ready(function () {
         }
     });
 
-    // 开始交易按钮点击事件
+            // 开始交易按钮点击事件
     $('#start-trading').click(function () {
         $.ajax({
             url: '/start_trading',

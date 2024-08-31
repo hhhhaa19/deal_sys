@@ -175,7 +175,7 @@ def store_info(symbol_sell):
     insert_data(result)
 
 
-@app.route('/update_trading_pair')
+@app.route('/update_trading_pair',methods=['GET','POST'])
 def update_trading_pair():
     global trading_pair
     global stop_trading
