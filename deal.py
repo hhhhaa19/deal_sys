@@ -3,24 +3,60 @@ import time
 from dao import *
 from Model_Infer import *
 from bian import *
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+import threading
+from threading import Lock
+
+app = Flask(__name__)
+trading_pair = "BTCUSDT"
+trading_pair_lock = Lock()
+log_entries = []
+# 定义全局变量用于控制交易
+stop_trading = threading.Event()
+stop_trading.set()
+
+# 设置日志记录器，将日志保存到log_entries列表中
+logging.basicConfig(filename='./logger/app.log', level=logging.INFO)
+
+
+# 自定义日志处理器，将日志写入log_entries
+class ListHandler(logging.Handler):
+    def emit(self, record):
+        log_entries.append(self.format(record))
+
 
 # 配置日志记录器
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+list_handler = ListHandler()
+list_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+
+# 配置日志记录器，将日志保存到文件并添加 ListHandler
+logging.basicConfig(
+    filename='./logger/app.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logging.getLogger().addHandler(list_handler)
 
 
 def deal():
-    # 由于只对比特币交易，这里写死，后续可以拓展
-    symbol_sell = 'USDT'  # 结算货币
-    trading_pair = 'BTCUSDT'
-    symbol_buy = 'BTC'
-    # 初始隐藏状态
+    global trading_pair
     device = torch.device("cpu")
     h_in = (torch.zeros([1, 1, 128], dtype=torch.float).to(device),
             torch.zeros([1, 1, 128], dtype=torch.float).to(device))
-    while True:
+    while not stop_trading.is_set():
         logging.info("开始交易")
+
+        # 锁定交易对变量以确保线程安全
+        with trading_pair_lock:
+            current_trading_pair = trading_pair
+
+        # 交易参数
+        symbol_sell = 'USDT'
+        symbol_buy = trading_pair.replace(trading_pair, 'USDT')
+
         # 具体算法,输出应该是action,1为买,2为卖,0为hold
         db_config = Config.db_config
+
         # 调用 get_action 获取动作和更新后的隐藏状态
         action, h_in = get_action(
             db_config.get('host'),
@@ -30,8 +66,9 @@ def deal():
             Config.MODEL_LOCATION,
             h_in
         )
+
         # 实际交易
-        trade_deal(symbol_sell, trading_pair, symbol_buy, action)
+        trade_deal(symbol_sell, current_trading_pair, symbol_buy, action)
 
         # 获取当前时间
         current_time = datetime.now()
@@ -39,9 +76,15 @@ def deal():
         # 将时间格式化为字符串
         formatted_time = current_time.strftime('%Y-%m-%d')
         update_database(formatted_time, Config.db_config)
+
         # 存储当前账户余额
         store_info(symbol_sell)
-        time.sleep(3600)
+
+        # 等待一段时间
+        for _ in range(3600):  # 分60次每秒检测一次
+            if current_trading_pair != trading_pair or stop_trading.is_set():
+                break
+            time.sleep(1)
 
 
 from trade_controller import *
@@ -132,5 +175,76 @@ def store_info(symbol_sell):
     insert_data(result)
 
 
+@app.route('/update_trading_pair')
+def update_trading_pair():
+    global trading_pair
+    global stop_trading
+    data = request.json
+    new_trading_pair = data.get('trading_pair')
+
+    if new_trading_pair:
+        with trading_pair_lock:
+            trading_pair = new_trading_pair
+            logging.info(f"Trading pair updated to: {trading_pair}")
+        return '', 204  # 无返回值
+    else:
+        return jsonify({"error": "Invalid trading pair"}), 400
+
+
+@app.route('/get_logs')
+def get_logs():
+    return jsonify({"logs": log_entries})
+
+
+@app.route('/start_trading')
+def start_trading():
+    if not stop_trading.is_set():
+        return jsonify({"status": "Trading already running"}), 400
+    stop_trading.clear()
+    trading_thread = threading.Thread(target=deal)
+    trading_thread.start()
+    return jsonify({"status": "Trading started"}), 200
+
+
+@app.route('/stop_trading')
+def stop_trading_function():
+    stop_trading.set()  # Set the stop_trading event to stop trading
+    return jsonify({"status": "Trading stopped"}), 200
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+@app.route('/kline')
+def kline():
+    trading_pair = request.args.get('trading_pair')
+    # 假设startTime和endTime是定义好的时间戳
+    startTime = int(time.time() - 36000) * 1000  # 1小时之前
+    endTime = int(time.time()) * 1000  # 当前时间
+    BTC_kline = get_kline(trading_pair, startTime, endTime)
+    if BTC_kline == None:
+        return None
+    # generate_kline_chart(BTC_kline)
+    return jsonify(BTC_kline)
+
+
+@app.route('/trade')
+def trade():
+    return jsonify(get_trade())
+
+
+@app.route('/account')
+def account():
+    # 得到当前所有钱包不为0所有币种余额
+    return jsonify(get_account_balance())
+
+
+@app.route('/award')
+def award():
+    # 得到以usdt结算的历史资产
+    return query_data()
+
+
 if __name__ == '__main__':
-    deal()
+    app.run(debug=False, use_reloader=False, host='0.0.0.0', port=5001)  # 设置允许的访问ip

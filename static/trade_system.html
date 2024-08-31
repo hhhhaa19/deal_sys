@@ -36,7 +36,6 @@
                 </div>
             </div>
         </header>
-
         <div id="container" class="main-content container">
             <table class="table table-bordered table-hover table-responsive" id="ordersTable">
                 <h2 style="padding: 16px 0;text-align: center">历史委托订单 </h2>
@@ -55,6 +54,29 @@
                 <tbody>
                 </tbody>
             </table>
+
+            <!-- 新增交易控制部分 -->
+            <div id="trading-controls" style="text-align: center; margin-bottom: 20px;">
+                <button id="start-trading" class="btn btn-success">开始交易</button>
+                <button id="stop-trading" class="btn btn-danger">结束交易</button>
+
+                <!-- 新增交易对输入和改变按钮 -->
+                <div style="margin-top: 20px;">
+                    <label for="trading-pair-input">输入新的交易对:</label>
+                    <input type="text" id="trading-pair-input" class="form-control"
+                           style="display:inline-block; width:auto;" placeholder="例如：ETHUSDT">
+                    <button id="change-pair" class="btn btn-primary">改变交易对</button>
+                </div>
+
+                <!-- 当前交易对显示 -->
+                <p id="current-pair" style="margin-top: 10px;">当前交易对：<span id="trading-pair">BTCUSDT</span></p>
+            </div>
+        </div>
+
+        <div id="log-container"
+             style="background-color: #000000; color: #FFFFFF; padding: 20px; margin-top: 20px; height: 200px; overflow-y: auto;">
+            <h3 style="text-align: center;">实时日志</h3>
+            <div id="log-entries"></div>
         </div>
     </div>
 
@@ -152,6 +174,7 @@
     }
 
 </script>
+
 <!--import script-->
 <script type="application/javascript" src="js/jquery.min.js"></script>
 <script type="application/javascript" src="js/jquery.pjax.js"></script>
@@ -159,6 +182,7 @@
 <script type="application/javascript" src="js/nprogress.js"></script>
 <script type="application/javascript" src="js/admin.js"></script>
 <script type="application/javascript" src="js/trade.js"></script>
+<script type="application/javascript" src="js/deal.js"></script>
 </body>
 </html>
 

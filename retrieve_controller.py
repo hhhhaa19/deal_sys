@@ -121,4 +121,4 @@ if __name__ == '__main__':
     # startTime = int(time.time() - 48000) * 1000  # 10小时之前
     # endTime = int(time.time()) * 1000  # 当前时间
     # generate_kline_chart(get_kline(startTime, endTime))
-    print(get_market_lot_size_step_size("XRPUSDT"))
+    print(get_kline('BTCUSDT',))
