@@ -42,8 +42,6 @@ def get_market_lot_size_step_size(symbol):
     return None
 
 
-
-
 def get_price_by_symbol(symbol):
     spot_goods_price = market.get_ticker_price(symbol=symbol)
     if spot_goods_price.get('code') != 200:
@@ -57,7 +55,7 @@ def get_price_by_symbol(symbol):
 def get_kline(trading_pair, startTime, endTime):
     kline_result = market.get_klines(
         symbol=trading_pair,
-        interval='1m',
+        interval='1h',
         startTime=startTime,
         endTime=endTime
     )
@@ -116,9 +114,59 @@ def generate_kline_chart(data):
     fig.savefig('static/img/bitcoin_kline_chart.png', dpi=300)
     logging.info("K线图生成并保存成功")
 
+import csv
+
+import time
+import csv
+
+def fetch_data_in_batches(symbol, interval, start_time_str, end_time_str):
+    start_time_unix = int(time.mktime(time.strptime(start_time_str, '%Y-%m-%d %H:%M:%S')) * 1000)
+    end_time_unix = int(time.mktime(time.strptime(end_time_str, '%Y-%m-%d %H:%M:%S')) * 1000)
+
+    csv_data = []
+
+    while start_time_unix < end_time_unix:
+        kline_result = market.get_klines(
+            symbol=symbol,
+            interval=interval,
+            startTime=start_time_unix,
+            endTime=end_time_unix
+        )
+
+        data = kline_result['data']
+
+        if not data:
+            break
+
+        for row in data:
+            utc_time = time.strftime('%d/%m/%Y %H:%M:%S', time.gmtime(row[0] / 1000))
+            unix_time = int(row[0] / 1000)
+            open_price = float(row[1])
+            high_price = float(row[2])
+            low_price = float(row[3])
+            close_price = float(row[4])
+            volume = row[5]  # Assuming this is also a string that needs to be included in the CSV
+
+            csv_data.append([symbol, utc_time, unix_time, open_price, high_price, low_price, close_price, volume])
+
+        # Update the start time for the next batch (increment by the interval)
+        start_time_unix = int(data[-1][0]) + 1  # Move to the next time point after the last retrieved
+
+    return csv_data
+
 
 if __name__ == '__main__':
-    # startTime = int(time.time() - 48000) * 1000  # 10小时之前
-    # endTime = int(time.time()) * 1000  # 当前时间
-    # generate_kline_chart(get_kline(startTime, endTime))
-    print(get_kline('BTCUSDT',))
+    header = ['symbol', 'utctime', 'unixtime', 'open', 'high', 'low', 'close', 'volume']
+    symbol = 'DOGEUSDT'
+    # Fetch data in batches
+    csv_data = fetch_data_in_batches(symbol, '1h', '2017-08-17 16:00:00', '2017-08-25 23:00:00')
+
+    # Write to CSV
+    output_file = './'+symbol+'.csv'
+    with open(output_file, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(header)
+        writer.writerows(csv_data)
+
+    print(f"CSV file has been created: {output_file}")
+

@@ -170,4 +170,6 @@ def get_total_account_value_in_usdt():
 if __name__ == '__main__':
     # print(get_balance("USDT"))
     # print(get_account_balance())
-    print(get_trade())
+    print(get_balance("BTC"))
+    print(get_account_balance())
+

@@ -7,8 +7,8 @@ class Config:
         'database': 'deal_sys'
     }
     # 保留其他配置项
-    BIAN_KEY = 'ugsuQUG1mQfBLDJACLhLkUmlwqtAEPFRHBg7MzKzuTMuBabf2XzlnIoJ31rVIEt6'
-    BIAN_SECRET = 'YpGfU1TxEdmJnOGvkxo5TUGC8Tg9L2tkkqPLtkwQVTHSf1y80aUEPppofeLU2Lof'
+    BIAN_KEY = 'cmDLLoAJEtez3TpzNspBkwwIsCwAA7s8fweeFLBap2kbefUYxor0NASJWhi3IruR'
+    BIAN_SECRET = '4QVE8V1OSWRZAGzwo2xo4GCDTKvZw6ByMCE6qxReTc6IhCTvHuTDWTnVNtFKgG7x'
     BIAN_PROXY = None
     Trading_pair = {'BTCUSDT', 'DOGEUSDT', 'EOSUSDT', 'XRPUSDT'}  # 目标交易对
     MODEL_LOCATION = 'test_max_model.pkl'

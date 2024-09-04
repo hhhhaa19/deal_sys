@@ -6,7 +6,7 @@ from bian import *
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 import threading
 from threading import Lock
-
+from decimal import Decimal, getcontext, ROUND_DOWN
 app = Flask(__name__)
 trading_pair = "BTCUSDT"
 trading_pair_lock = Lock()
@@ -52,20 +52,20 @@ def deal():
 
         # 交易参数
         symbol_sell = 'USDT'
-        symbol_buy = trading_pair.replace(trading_pair, 'USDT')
+        symbol_buy = trading_pair.replace(symbol_sell, '')
 
         # 具体算法,输出应该是action,1为买,2为卖,0为hold
         db_config = Config.db_config
 
         # 调用 get_action 获取动作和更新后的隐藏状态
-        action, h_in = get_action(
-            db_config.get('host'),
-            db_config.get('user'),
-            db_config.get('password'),
-            db_config.get('database'),
-            Config.MODEL_LOCATION,
-            h_in
-        )
+        # action, h_in = get_action(
+        #     db_config.get('host'),
+        #     db_config.get('user'),
+        #     db_config.get('password'),
+        #     db_config.get('database'),
+        #     Config.MODEL_LOCATION,
+        #     h_in
+        # )
 
         # 实际交易
         trade_deal(symbol_sell, current_trading_pair, symbol_buy, action)
@@ -91,6 +91,8 @@ from trade_controller import *
 from retrieve_controller import *
 from decimal import Decimal, getcontext
 
+import logging
+
 
 def truncate_float(number, tick_size):
     """
@@ -100,32 +102,34 @@ def truncate_float(number, tick_size):
     :param tick_size: 价格的最小变化单位，字符串格式，例如 "0.001000"
     :return: 满足 tick_size 要求的浮点数
     """
+    # 设置 Decimal 精度上下文
+    getcontext().rounding = ROUND_DOWN
+
+    # 将 number 和 tick_size 转换为 Decimal
+    number_decimal = Decimal(number)
+    tick_size_decimal = Decimal(tick_size)
+
     # 确定小数位数
     if '.' in tick_size:
         decimal_places = len(tick_size.split('.')[1].rstrip('0'))
     else:
         decimal_places = 0
 
-    # 将数字转换为字符串并截断到指定的小数位数
-    str_number = str(number)
-    if '.' in str_number:
-        integer_part, decimal_part = str_number.split('.')
-        truncated_number = integer_part + '.' + decimal_part[:decimal_places]
-    else:
-        truncated_number = str_number
-
-    # 将截断后的字符串转换回浮点数
-    truncated_float = float(truncated_number)
+    # 截断到指定的小数位数
+    factor = Decimal('1e{}'.format(decimal_places))
+    truncated_number = (number_decimal * factor).to_integral_value(rounding=ROUND_DOWN) / factor
 
     # 确保结果是 tick_size 的倍数
-    truncated_float = (truncated_float // float(tick_size)) * float(tick_size)
+    truncated_float = (truncated_number // tick_size_decimal) * tick_size_decimal
 
-    return truncated_float
+    logging.info("实际交易数目: %s", truncated_float)
+    return float(truncated_float)
 
 
-def trade_deal(symbol_sell, trading_pair, symbol_buy, action=None):
+def trade_deal(symbol_sell, trading_pair, symbol_buy, action=2):
     # 一旦出现问题，直接退出，等待下次命令
     accuracy = get_market_lot_size_step_size(trading_pair)
+    logging.info("当前币种%s的要求数字精确度为%s", trading_pair, accuracy)
 
     if action == 1:  # 买比特币
         logging.info("开始购买")
@@ -175,7 +179,7 @@ def store_info(symbol_sell):
     insert_data(result)
 
 
-@app.route('/update_trading_pair',methods=['GET','POST'])
+@app.route('/update_trading_pair', methods=['GET', 'POST'])
 def update_trading_pair():
     global trading_pair
     global stop_trading
@@ -210,6 +214,7 @@ def start_trading():
 def stop_trading_function():
     stop_trading.set()  # Set the stop_trading event to stop trading
     return jsonify({"status": "Trading stopped"}), 200
+
 
 @app.route('/')
 def index():
