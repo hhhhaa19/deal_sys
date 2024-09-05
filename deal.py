@@ -57,15 +57,15 @@ def deal():
         # 具体算法,输出应该是action,1为买,2为卖,0为hold
         db_config = Config.db_config
 
-        # 调用 get_action 获取动作和更新后的隐藏状态
-        # action, h_in = get_action(
-        #     db_config.get('host'),
-        #     db_config.get('user'),
-        #     db_config.get('password'),
-        #     db_config.get('database'),
-        #     Config.MODEL_LOCATION,
-        #     h_in
-        # )
+        #调用 get_action 获取动作和更新后的隐藏状态
+        action, h_in = get_action(
+            db_config.get('host'),
+            db_config.get('user'),
+            db_config.get('password'),
+            db_config.get('database'),
+            Config.MODEL_LOCATION,
+            h_in
+        )
 
         # 实际交易
         trade_deal(symbol_sell, current_trading_pair, symbol_buy, action)
@@ -126,7 +126,7 @@ def truncate_float(number, tick_size):
     return float(truncated_float)
 
 
-def trade_deal(symbol_sell, trading_pair, symbol_buy, action=2):
+def trade_deal(symbol_sell, trading_pair, symbol_buy, action=None):
     # 一旦出现问题，直接退出，等待下次命令
     accuracy = get_market_lot_size_step_size(trading_pair)
     logging.info("当前币种%s的要求数字精确度为%s", trading_pair, accuracy)

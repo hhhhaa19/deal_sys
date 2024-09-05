@@ -3,7 +3,7 @@ class Config:
     db_config = {
         'host': 'localhost',
         'user': 'root',
-        'password': 'WJT164673!',
+        'password': '123456',
         'database': 'deal_sys'
     }
     # 保留其他配置项
