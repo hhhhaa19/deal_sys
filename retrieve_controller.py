@@ -55,7 +55,7 @@ def get_price_by_symbol(symbol):
 def get_kline(trading_pair, startTime, endTime):
     kline_result = market.get_klines(
         symbol=trading_pair,
-        interval='1s',
+        interval='1m',
         startTime=startTime,
         endTime=endTime
     )

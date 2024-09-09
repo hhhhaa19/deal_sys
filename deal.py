@@ -7,6 +7,7 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 import threading
 from threading import Lock
 from decimal import Decimal, getcontext, ROUND_DOWN
+
 app = Flask(__name__)
 trading_pair = "BTCUSDT"
 trading_pair_lock = Lock()
@@ -57,7 +58,7 @@ def deal():
         # 具体算法,输出应该是action,1为买,2为卖,0为hold
         db_config = Config.db_config
 
-        #调用 get_action 获取动作和更新后的隐藏状态
+        # 调用 get_action 获取动作和更新后的隐藏状态
         action, h_in = get_action(
             db_config.get('host'),
             db_config.get('user'),
@@ -175,6 +176,9 @@ def store_info(symbol_sell):
     # 当前时间戳
     timestamp = datetime.now()
     free = get_total_account_value_in_usdt()
+    if free == 0:
+        logging.warning("未成功注入信息")
+        return
     result = {"timestamp": timestamp, "asset": symbol_sell, "free": free}
     insert_data(result)
 
