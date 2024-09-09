@@ -134,8 +134,8 @@ def insert_bars_data(database, symbol, time, open_price, high_price, low_price, 
     connection.close()
 
 
-def update_database(start_date, db_config):
-    symbol = 'BTCUSDT'
+def update_database(start_date, db_config,trading_pair):
+    symbol = trading_pair
     interval = '1h'
     start_time = int(time.mktime(time.strptime(start_date, '%Y-%m-%d')) * 1000)
     now = datetime.now(pytz.utc).replace(minute=0, second=0, microsecond=0)
@@ -162,8 +162,5 @@ if __name__ == "__main__":
         'database': 'deal_sys'
     }
     start_date = "2024-07-26"  # 起始日期
-    start_time = int(time.mktime(time.strptime(start_date, '%Y-%m-%d')) * 1000)
-    now = datetime.now(pytz.utc).replace(minute=0, second=0, microsecond=0)
-    end_time = int(now.timestamp() * 1000)
-    print(fetch_history_klines('BTCUSDT',start_time,end_time, interval='1h'))
+    update_database(start_date,  db_config,"DOGEUSDT")
 

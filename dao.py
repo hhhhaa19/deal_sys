@@ -42,3 +42,36 @@ try:
 
 except mysql.connector.Error as err:
     logging.error(f"Error connecting to database: {err}")
+
+import sqlite3
+
+
+def get_impact_data(trading_pair):
+    # 连接 SQLite 数据库
+    connection = sqlite3.connect(Config.SQLITE_LOCATION)
+    cursor = connection.cursor()
+    trading_pair = Config.sqlite_corresponding_argument[trading_pair]
+    try:
+        # 构建表名
+        table_name = f"{trading_pair}_meta_llama_Meta_Llama_3_1_8B_Instruct_Turbo_news"
+
+        # 执行查询
+        query = f"""
+        SELECT regulatory_impact, technological_impact, market_adoption_impact,
+               macroeconomic_implications, overall_sentiment
+        FROM {table_name}
+        """
+        cursor.execute(query)
+        results = cursor.fetchall()
+        logging.info(f"Data retrieved from {table_name}: {results}")
+        return results
+    except sqlite3.Error as e:
+        logging.error(f"An error occurred in SQLite: {e}")
+    finally:
+        # 关闭数据库连接
+        cursor.close()
+        connection.close()
+
+
+if __name__ == '__main__':
+    print(get_impact_data('BTCUSDT'))

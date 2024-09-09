@@ -14,16 +14,17 @@ from dao import *
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-def get_last_24_hours_close_prices(db_config):
+def get_last_24_hours_close_prices(db_config, trading_pair):
     connection = mysql.connector.connect(**db_config)
     cursor = connection.cursor()
     query = """
     SELECT close_price, volume, high_price, low_price, open_price
     FROM historical_bars_data3_1h_bian_new
+    WHERE symbol = %s
     ORDER BY utctime DESC
     LIMIT 25
     """
-    cursor.execute(query)
+    cursor.execute(query, (trading_pair,))
     result = cursor.fetchall()
     df = pd.DataFrame(result, columns=['close', 'volume', 'high', 'low', 'open'])
     df = df.astype(float)
@@ -40,7 +41,7 @@ def load_model(model_path, n_features, n_actions, device):
     return model
 
 
-def get_action(host, user, password, database, model_path,h_in):
+def get_action(host, user, password, database, model_path, h_in, trading_pair):
     db_config = {
         'host': host,
         'user': user,
@@ -57,10 +58,10 @@ def get_action(host, user, password, database, model_path,h_in):
     model = load_model(model_path, n_features, n_actions, device)
     logging.info("模型加载成功")
 
-
     # 从数据库中获取数据
-    df = get_last_24_hours_close_prices(db_config)
+    df = get_last_24_hours_close_prices(db_config,trading_pair)
     df["Real_close"] = df["close"]
+
     env = stock(df)
     scaler = StandardScaler()
     columns_to_normalize = ['open', 'high', 'low', 'close', 'volume']
@@ -76,3 +77,8 @@ def get_action(host, user, password, database, model_path,h_in):
     action = torch.argmax(prob).item()
     logging.info("当前action")
     return action, h_out
+
+if __name__ == '__main__':
+    df = get_last_24_hours_close_prices(db_config,"BTCUSDT")
+    df["Real_close"] = df["close"]
+    print(df)

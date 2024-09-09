@@ -46,7 +46,12 @@ def deal():
             torch.zeros([1, 1, 128], dtype=torch.float).to(device))
     while not stop_trading.is_set():
         logging.info("开始交易")
+        # 获取当前时间
+        current_time = datetime.now()
 
+        # 将时间格式化为字符串
+        formatted_time = current_time.strftime('%Y-%m-%d')
+        update_database(formatted_time, Config.db_config, trading_pair)
         # 锁定交易对变量以确保线程安全
         with trading_pair_lock:
             current_trading_pair = trading_pair
@@ -65,18 +70,12 @@ def deal():
             db_config.get('password'),
             db_config.get('database'),
             Config.MODEL_LOCATION,
-            h_in
+            h_in,
+            trading_pair
         )
 
         # 实际交易
         trade_deal(symbol_sell, current_trading_pair, symbol_buy, action)
-
-        # 获取当前时间
-        current_time = datetime.now()
-
-        # 将时间格式化为字符串
-        formatted_time = current_time.strftime('%Y-%m-%d')
-        update_database(formatted_time, Config.db_config)
 
         # 存储当前账户余额
         store_info(symbol_sell)

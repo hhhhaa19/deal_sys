@@ -3,8 +3,13 @@ class Config:
     db_config = {
         'host': 'localhost',
         'user': 'root',
-        'password': '123456',
+        'password': 'WJT164673!',
         'database': 'deal_sys'
+    }
+    sqlite_corresponding_argument = {
+        'BTCUSDT': 'Bitcoin',
+        'ETHUSDT': 'Ethereum',
+        'DOGEUSDT': 'Dogecoin'
     }
     # 保留其他配置项
     BIAN_KEY = 'cmDLLoAJEtez3TpzNspBkwwIsCwAA7s8fweeFLBap2kbefUYxor0NASJWhi3IruR'
@@ -12,6 +17,8 @@ class Config:
     BIAN_PROXY = None
     Trading_pair = {'BTCUSDT', 'DOGEUSDT', 'EOSUSDT', 'XRPUSDT'}  # 目标交易对
     MODEL_LOCATION = 'test_max_model.pkl'
+    SQLITE_LOCATION = './news/crypto.db'
 
+from dao import *
 if __name__ == '__main__':
     print(Config.db_config.get('host'))

@@ -62,9 +62,12 @@
 
                 <!-- 新增交易对输入和改变按钮 -->
                 <div style="margin-top: 20px;">
-                    <label for="trading-pair-input">输入新的交易对:</label>
-                    <input type="text" id="trading-pair-input" class="form-control"
-                           style="display:inline-block; width:auto;" placeholder="例如：ETHUSDT">
+                    <label for="trading-pair-select">选择交易对:</label>
+                    <select id="trading-pair-select" class="form-control" style="display:inline-block; width:auto;">
+                        <option value="BTCUSDT">BTCUSDT</option>
+                        <option value="ETHUSDT">ETHUSDT</option>
+                        <option value="DOGEUSDT">DOGEUSDT</option>
+                    </select>
                     <button id="change-pair" class="btn btn-primary">改变交易对</button>
                 </div>
 

@@ -1,28 +1,24 @@
 $(document).ready(function () {
     // 更新交易对按钮点击事件
     $('#change-pair').click(function () {
-        var newPair = $('#trading-pair-input').val().trim();
-        if (newPair) {
-            $.ajax({
-                url: '/update_trading_pair',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({trading_pair: newPair}),
-                success: function () {
-                    $('#trading-pair').text(newPair);
-                    alert('交易对已更新为: ' + newPair);
-                },
-                error: function (response) {
-                    var errorMessage = response.responseJSON ? response.responseJSON.error : response.responseText;
-                    alert('更新失败: ' + errorMessage);
-                }
-            });
-        } else {
-            alert('请输入有效的交易对!');
-        }
+        var newPair = $('#trading-pair-select').val(); // 获取选择框中的值
+        $.ajax({
+            url: '/update_trading_pair',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({trading_pair: newPair}),
+            success: function () {
+                $('#trading-pair').text(newPair);
+                alert('交易对已更新为: ' + newPair);
+            },
+            error: function (response) {
+                var errorMessage = response.responseJSON ? response.responseJSON.error : response.responseText;
+                alert('更新失败: ' + errorMessage);
+            }
+        });
     });
 
-            // 开始交易按钮点击事件
+    // 开始交易按钮点击事件
     $('#start-trading').click(function () {
         $.ajax({
             url: '/start_trading',
@@ -49,10 +45,8 @@ $(document).ready(function () {
             }
         });
     });
-});
-$(document).ready(function () {
-    // 其他按钮事件处理...
 
+    // 其他按钮事件处理...
     // 定时获取日志的函数
     function fetchLogs() {
         $.ajax({
