@@ -157,12 +157,12 @@ def fetch_data_in_batches(symbol, interval, start_time_str, end_time_str):
 
 if __name__ == '__main__':
     header = ['symbol', 'utctime', 'unixtime', 'open', 'high', 'low', 'close', 'volume']
-    symbol = 'DOGEUSDT'
+    symbol = 'BTCUSDT'
     # Fetch data in batches
-    csv_data = fetch_data_in_batches(symbol, '1h', '2017-08-17 16:00:00', '2017-08-25 23:00:00')
+    csv_data = fetch_data_in_batches(symbol, '1h', '2017-08-17 04:00:00', '2024-08-25 16:00:00')
 
     # Write to CSV
-    output_file = './'+symbol+'.csv'
+    output_file = f'D:\\software\\daily\\桌面\\demo\\{symbol}.csv'
     with open(output_file, 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(header)
