@@ -7,7 +7,7 @@
 (function($){
 
 // When called on a container with a selector, fetches the href with
-// ajax into the container or with the data-pjax attribute on the link
+// ajax into the container or with the Data-pjax attribute on the link
 // itself.
 //
 // Tries to make sure the back button and ctrl+click work the way
@@ -33,7 +33,7 @@ function fnPjax(selector, container, options) {
     var opts = options
     if (!opts.container) {
       opts = $.extend({}, options)
-      opts.container = $(this).attr('data-pjax')
+      opts.container = $(this).attr('Data-pjax')
     }
     handleClick(event, opts)
   })
@@ -81,7 +81,7 @@ function handleClick(event, container, options) {
 
   var defaults = {
     url: link.href,
-    container: $link.attr('data-pjax'),
+    container: $link.attr('Data-pjax'),
     target: link
   }
 
@@ -106,7 +106,7 @@ function handleClick(event, container, options) {
 // Examples
 //
 //  $(document).on('submit', 'form', function(event) {
-//    $.pjax.submit(event, '[data-pjax-container]')
+//    $.pjax.submit(event, '[Data-pjax-container]')
 //  })
 //
 // Returns nothing.
@@ -122,7 +122,7 @@ function handleSubmit(event, container, options) {
   var defaults = {
     type: ($form.attr('method') || 'GET').toUpperCase(),
     url: $form.attr('action'),
-    container: $form.attr('data-pjax'),
+    container: $form.attr('Data-pjax'),
     target: form
   }
 
@@ -149,7 +149,7 @@ function handleSubmit(event, container, options) {
 // then pushState()'s the loaded URL.
 //
 // Works just like $.ajax in that it accepts a jQuery ajax
-// settings object (with keys like url, type, data, etc).
+// settings object (with keys like url, type, Data, etc).
 //
 // Accepts these extra keys:
 //
@@ -652,7 +652,7 @@ function parseHTML(html) {
 // 2. Extracts inline <title> tags
 // 3. Builds response Element and extracts fragment if set
 //
-// data    - String response data
+// Data    - String response Data
 // xhr     - XHR response
 // options - pjax options Object
 //
@@ -675,7 +675,7 @@ function extractContainer(data, xhr, options) {
     $head = $body = $(parseHTML(data))
   }
 
-  // If response data is empty, return fast
+  // If response Data is empty, return fast
   if ($body.length === 0)
     return obj
 
@@ -694,7 +694,7 @@ function extractContainer(data, xhr, options) {
     if ($fragment.length) {
       obj.contents = options.fragment === 'body' ? $fragment : $fragment.contents()
 
-      // If there's no title, look for data-title and title attributes
+      // If there's no title, look for Data-title and title attributes
       // on the fragment
       if (!obj.title)
         obj.title = $fragment.attr('title') || $fragment.data('title')

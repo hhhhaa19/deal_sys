@@ -20,7 +20,7 @@ $(document).ready(function() {
             });
         },
         error: function(error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching Data:', error);
         }
     });
 
@@ -66,7 +66,7 @@ $(document).ready(function() {
             chart.setOption(option);
         },
         error: function(error) {
-            console.error('Error fetching chart data:', error);
+            console.error('Error fetching chart Data:', error);
         }
     });
 });

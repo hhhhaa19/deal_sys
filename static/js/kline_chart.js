@@ -28,7 +28,7 @@ $(document).ready(function () {
             myChart.setOption(option);
         },
         error: function (xhr, status, error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching Data:', error);
         }
     });
 });

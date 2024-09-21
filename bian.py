@@ -62,9 +62,9 @@
 # while current < end_time:
 #     next_time = min(current + 30*24*60*60*1000, end_time)
 #     print(next_time)
-#     data = fetch_history_klines(symbol, current, next_time, interval)
+#     Data = fetch_history_klines(symbol, current, next_time, interval)
 #     current = next_time + 1
-#     for kline in data:
+#     for kline in Data:
 #         # print(kline)
 #         insert_bars_data('historical_bars_data3_1h_bian_new', symbol, kline[0], kline[1], kline[2], kline[3], kline[4], kline[5])
 # # time.sleep(60)

@@ -32,7 +32,7 @@ def get_market_lot_size_step_size(symbol):
     :return: 市价单交易量的最小变动单位，如果未找到则返回None
     """
     exchangeInfo_result = binance_market.get_exchangeInfo(symbol)
-    data = exchangeInfo_result.get('data', {})
+    data = exchangeInfo_result.get('Data', {})
     if data.get('symbol') == symbol:
         for filter in data.get('filters', []):
             if filter.get('filterType') == 'LOT_SIZE':
@@ -47,7 +47,7 @@ def get_price_by_symbol(symbol):
     if spot_goods_price.get('code') != 200:
         logging.warning("获取数据失败: %s", spot_goods_price.get('msg'))
         return None
-    price = spot_goods_price.get('data')['price']
+    price = spot_goods_price.get('Data')['price']
     logging.info("当前%s价格: %s", symbol, price)
     return price
 
@@ -64,7 +64,7 @@ def get_kline(trading_pair, startTime, endTime):
         logging.warning("获取K线数据失败,失败原因 %s", kline_result['msg'])
         return None
 
-    kline_data = kline_result['data']
+    kline_data = kline_result['Data']
 
     categories = [time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(item[0] / 1000)) for item in kline_data]
     values = [[item[1], item[2], item[3], item[4]] for item in kline_data]
@@ -133,7 +133,7 @@ def fetch_data_in_batches(symbol, interval, start_time_str, end_time_str):
             endTime=end_time_unix
         )
 
-        data = kline_result['data']
+        data = kline_result['Data']
 
         if not data:
             break
@@ -158,7 +158,7 @@ def fetch_data_in_batches(symbol, interval, start_time_str, end_time_str):
 if __name__ == '__main__':
     header = ['symbol', 'utctime', 'unixtime', 'open', 'high', 'low', 'close', 'volume']
     symbol = 'BTCUSDT'
-    # Fetch data in batches
+    # Fetch Data in batches
     csv_data = fetch_data_in_batches(symbol, '1h', '2017-08-17 04:00:00', '2024-08-25 16:00:00')
 
     # Write to CSV

@@ -3,7 +3,7 @@ from binance_interface.app.utils import eprint
 import time, csv
 from alpaca.data.historical import CryptoHistoricalDataClient
 
-# No keys required for crypto data
+# No keys required for crypto Data
 client = CryptoHistoricalDataClient()
 
 from config import Config
@@ -37,7 +37,7 @@ def fetch_data_in_batches(symbol, interval, start_time_str, end_time_str):
             bar='1h'
         )
         eprint(candle_result)
-        data = candle_result['data']
+        data = candle_result['Data']
 
         if data.size == 0:
             break
@@ -72,8 +72,8 @@ interval = '1h'
 
 if __name__ == '__main__':
     # header = ['symbol', 'utctime', 'unixtime', 'open', 'high', 'low', 'close', 'volume']
-    # data = yf.download(tickers=symbol, start=start_time, end=end_time, interval=interval)
-    # print(data)
+    # Data = yf.download(tickers=symbol, start=start_time, end=end_time, interval=interval)
+    # print(Data)
     # # Creating request object
     # request_params = CryptoBarsRequest(
     #     symbol_or_symbols=["ETH/USD"],

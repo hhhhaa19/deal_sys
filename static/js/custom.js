@@ -125,7 +125,7 @@ function parallax (){
         bannerheight ();
     });
 	$( window ).ready(function() {
-		$('[data-toggle="tooltip"]').tooltip();
+		$('[Data-toggle="tooltip"]').tooltip();
 		$(".loder").fadeOut("slow");
 		scrollfix ();
 		owl_carousel ();

@@ -34,7 +34,7 @@ class StockTestEnv:
                 logging.warning("获取账户数据失败: %s", account_result.get('msg'))
                 return None
             else:
-                return account_result.get('data')
+                return account_result.get('Data')
         except Exception as e:
             logging.error(f"获取账户数据时出错: {e}")
             return None
@@ -67,8 +67,8 @@ class StockTestEnv:
         if set_order_result.get('code') != 200:
             logging.error("订单创建失败，错误原因%s", set_order_result.get('msg'))
             return
-        logging.info("订单创建成功，订单号为%s,买入数目为%s", set_order_result.get('data')['orderId'], quantity)
-        return set_order_result.get('data')
+        logging.info("订单创建成功，订单号为%s,买入数目为%s", set_order_result.get('Data')['orderId'], quantity)
+        return set_order_result.get('Data')
 
     def create_sell_order(self, action, quantity):
         set_order_result = self.trade.set_order(
@@ -80,8 +80,8 @@ class StockTestEnv:
         if set_order_result.get('code') != 200:
             logging.error("订单创建失败，错误原因%s", set_order_result.get('msg'))
             return
-        logging.info("订单创建成功，订单号为%s,出售数目为%s", set_order_result.get('data')['orderId'], quantity)
-        return set_order_result.get('data')
+        logging.info("订单创建成功，订单号为%s,出售数目为%s", set_order_result.get('Data')['orderId'], quantity)
+        return set_order_result.get('Data')
 
     def get_price_by_symbol(self, symbol):
         spot_goods_price = self.market.get_ticker_price(symbol=symbol)
@@ -89,7 +89,7 @@ class StockTestEnv:
         if spot_goods_price.get('code') != 200:
             logging.warning("获取数据失败: %s", spot_goods_price.get('msg'))
             return None
-        price = spot_goods_price.get('data')['price']
+        price = spot_goods_price.get('Data')['price']
         logging.info("当前比特币价格: %s", price)
         return price
 
