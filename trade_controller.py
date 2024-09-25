@@ -26,7 +26,7 @@ if account_result.get('code') != 200:
     logging.warning("获取账户数据失败: %s", account_result.get('msg'))
     account_result = None
 else:
-    account_result = account_result.get('Data')
+    account_result = account_result.get('data')
 
 
 # 检查是否可以交易
@@ -58,8 +58,8 @@ def create_buy_order(trading_pair, action, quantity):
     if set_order_result.get('code') != 200:
         logging.error("订单创建失败，错误原因%s", set_order_result.get('msg'))
         return
-    logging.info("订单创建成功，订单号为%s,买入数目为%s", set_order_result.get('Data')['orderId'], quantity)
-    return set_order_result.get('Data')
+    logging.info("订单创建成功，订单号为%s,买入数目为%s", set_order_result.get('data')['orderId'], quantity)
+    return set_order_result.get('data')
 
 
 def create_sell_order(trading_pair, action, quantity):
@@ -72,8 +72,8 @@ def create_sell_order(trading_pair, action, quantity):
     if set_order_result.get('code') != 200:
         logging.error("订单创建失败，错误原因%s", set_order_result.get('msg'))
         return
-    logging.info("订单创建成功，订单号为%s,出售数目为%s", set_order_result.get('Data')['orderId'], quantity)
-    return set_order_result.get('Data')
+    logging.info("订单创建成功，订单号为%s,出售数目为%s", set_order_result.get('data')['orderId'], quantity)
+    return set_order_result.get('data')
 
 
 # 输入symbol，返回当前symbol的所有挂单信息：
@@ -84,7 +84,7 @@ def order_by_symbol(symbol):
         logging.error("查询订单错误")
         return result
 
-    for order in open_order_result.get('Data'):
+    for order in open_order_result.get('data'):
         if order.get('symbol') == symbol:
             order_detail = trade.get_order(symbol=symbol, order_id=order.get('orderId'))
             result.append(order_detail)
@@ -104,7 +104,7 @@ def get_trade():
             logging.error("查询 %s 交易对历史订单失败，错误原因: %s", symbol, userTrade_result.get('msg'))
             continue  # 继续处理下一个交易对
 
-        trades = userTrade_result.get('Data', [])
+        trades = userTrade_result.get('data', [])
         if trades:
             all_trades.extend(trades)
             logging.info("查询 %s 交易对成功，共获取到 %d 条交易记录", symbol, len(trades))
@@ -124,7 +124,7 @@ def get_account_balance():
     if account_result.get('code') != 200:
         logging.error("查询账户余额失败，错误原因%s", account_result.get('msg'))
         return
-    account_balance = account_result.get('Data')['balances']
+    account_balance = account_result.get('data')['balances']
     filtered_balance = [asset for asset in account_balance if float(asset['free']) > 0]
     logging.info("查询账户余额成功,当前余额%s", filtered_balance)
     return filtered_balance
@@ -170,6 +170,5 @@ def get_total_account_value_in_usdt():
 if __name__ == '__main__':
     # print(get_balance("USDT"))
     # print(get_account_balance())
-    print(get_balance("BTC"))
-    print(get_account_balance())
-
+    get_total_account_value_in_usdt()
+    get_trade()
