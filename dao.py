@@ -8,43 +8,41 @@ import pandas as pd
 # 配置日志
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-try:
-    db_config = Config.db_config
-    # 创建数据库连接
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
-    logging.info("Successfully connected to the database")
+db_config = Config.db_config
 
 
-    def insert_data(account_balance):
-        try:
-            insert_query = """
-            INSERT INTO wallet_balances (timestamp, asset, free_balance)
-            VALUES (%s, %s, %s)
-            """
-            data = (account_balance['timestamp'], account_balance['asset'], account_balance['free'])
-            cursor.execute(insert_query, data)
-            # 提交更改
-            connection.commit()
-            logging.info(f"Inserted Data: {data}")
-        except mysql.connector.Error as err:
-            logging.error(f"Error: {err}")
+def insert_data(account_balance):
+    try:
+        # 创建数据库连接
+        with mysql.connector.connect(**db_config) as connection:
+            with connection.cursor() as cursor:
+                insert_query = """
+                INSERT INTO wallet_balances (timestamp, asset, free_balance)
+                VALUES (%s, %s, %s)
+                """
+                data = (account_balance['timestamp'], account_balance['asset'], account_balance['free'])
+                cursor.execute(insert_query, data)
+                # 提交更改
+                connection.commit()
+                logging.info(f"Inserted Data: {data}")
+    except mysql.connector.Error as err:
+        logging.error(f"Error: {err}")
+        if connection.is_connected():
             connection.rollback()
 
 
-    def query_data():
-        try:
-            select_query = "SELECT * FROM wallet_balances ORDER BY timestamp"
-            cursor.execute(select_query)
-            data = cursor.fetchall()
-            logging.info("Fetched Data from wallet_balances")
-            return data
-        except mysql.connector.Error as err:
-            logging.error(f"Error: {err}")
-
-except mysql.connector.Error as err:
-    logging.error(f"Error connecting to database: {err}")
-
+def query_data():
+    try:
+        # 创建数据库连接
+        with mysql.connector.connect(**db_config) as connection:
+            with connection.cursor() as cursor:
+                select_query = "SELECT * FROM wallet_balances ORDER BY timestamp"
+                cursor.execute(select_query)
+                data = cursor.fetchall()
+                logging.info("Fetched Data from wallet_balances")
+                return data
+    except mysql.connector.Error as err:
+        logging.error(f"Error: {err}")
 
 
 def get_impact_data_news(trading_pair):
@@ -136,10 +134,10 @@ def generate_mock_data(num_rows):
 from Model_Infer import *
 
 if __name__ == '__main__':
-    df1 = pd.DataFrame(get_last_24_hours_close_prices(Config.db_config, 'BTCUSDT'))
-    df2 = pd.DataFrame(get_impact_data_news('BTCUSDT'))
-    df3 = pd.DataFrame(generate_mock_data(25))
-    result = pd.concat([df1, df2,df3], axis=1)
-
-    print(result)
-    print(result.columns.tolist())
+    # df1 = pd.DataFrame(get_last_24_hours_close_prices(Config.db_config, 'BTCUSDT'))
+    # df2 = pd.DataFrame(get_impact_data_news('BTCUSDT'))
+    # df3 = pd.DataFrame(generate_mock_data(25))
+    # result = pd.concat([df1, df2,df3], axis=1)
+    print(query_data())
+    # print(result)
+    # print(result.columns.tolist())
