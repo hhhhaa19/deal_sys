@@ -54,6 +54,17 @@
             font-family: monospace;
             font-size: 90%;
         }
+
+        .abstract-section {
+            margin-top: 40px;
+        }
+
+        .abstract-section h3 {
+            font-size: 22px;
+            color: #2C3E50;
+            margin-bottom: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -62,9 +73,16 @@
     <p><strong>Frontend:</strong> The interface uses HTML, CSS, JavaScript, and jQuery to manage dynamic content and asynchronous requests.</p>
     <p><strong>Backend:</strong> Development is based on Python's Flask framework, which supports simplified backend structure and rapid development.</p>
     <p><strong>Project Structuring:</strong> The project experienced redundancy issues with multiple teams fetching the same BTC data from three different sources, leading to a lack of clear structure and layering. This has impacted code maintainability and readability, suggesting a need for a detailed initial task assignment and a microservices approach for clearer service boundaries and easier future expansions.</p>
-    <p><strong>Thread Safety:</strong> Flask's built-in thread pool elegantly handles thread safety. Transactions operate in separate threads created via <code>threading.Thread</code> to avoid blocking the thread pool, with <code>threading.Event</code> objects managing start and stop signals for trading operations. A global variable <code>trading_pair</code> is protected by a <code>trading_pair_lock</code> to ensure thread-safe operations.</p>
-    <p><strong>Database Management:</strong> The database handling is secure against SQL injections by validating queries server-side. However, the lack of a connection pool results in high overhead from frequent open/close connections. Introducing a database connection pool and handling potential concurrency issues like dirty reads or phantom reads could improve performance and reliability.</p>
-    <p><strong>Automation and Service Availability:</strong> Service availability is robust due to unified exception handling and well-maintained logs, which simplify maintenance and debugging. Future enhancements could include SMS notifications to further automate and improve service responsiveness.</p>
+    <p><strong>Thread Safety:</strong> Flask's built-in thread pool elegantly handles thread safety. Transactions operate in separate threads created via <code>threading.Thread</code> to avoid blocking the thread pool, with <code>threading.Event</code> objects managing start and stop
+
+    <!-- New Abstract Section -->
+    <div class="abstract-section">
+        <h3>Abstract</h3>
+        <p>Recent advancements in large language models (LLMs) have demonstrated their potential to significantly impact finance trading, particularly through sentiment analysis. The cryptocurrency market, known for its volatility and unpredictability, often renders price-based trading approaches inadequate. This necessitates the adoption of more sophisticated techniques such as market sentiment analysis, which can benefit from the insights provided by LLMs. This study introduces an innovative method that integrates sentiment analysis derived from five distinct LLMs with deep reinforcement learning to devise a cryptocurrency trading strategy.</p>
+        <p>Recognizing that LLM outputs cannot be guaranteed to be infallibly accurate, which contributes to LLM hallucinations, this paper details the implementation of a stringent outlier detection and removal process. By adopting a "Trust-The-Majority" strategy, the research aims to ensure that trading decisions are informed by reliable sentiment data.</p>
+        <p>In addition, sentiment scores are traditionally timestamped to the publication of news or social media posts. To more accurately reflect the actual impact of such information on market sentiment, this study applies the Ebbinghaus Forgetting Curve to model the waning influence of information over time. This allows for a more nuanced understanding of how news affects market dynamics.</p>
+        <p>The enhanced sentiment scores, in conjunction with traditional market data such as OHLCV (Open, High, Low, Close, Volume), are utilized by a deep reinforcement learning model to make trading decisions. Experimental results demonstrate that the proposed multi-LLM sentiment-driven framework improves trading performance in the fast-paced cryptocurrency market.</p>
+        <p>The methodology outlined in this paper offers a solid foundation for incorporating real-time market sentiment analysis into financial applications.</p>
+    </div>
+
 </div>
-</body>
-</html>
