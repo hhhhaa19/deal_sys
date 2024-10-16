@@ -17,7 +17,7 @@ class Config:
     BIAN_PROXY = None
     Trading_pair = {'BTCUSDT', 'DOGEUSDT', 'EOSUSDT', 'XRPUSDT'}  # 目标交易对
     MODEL_LOCATION = 'test_max_model.pkl'
-    SQLITE_LOCATION = './news/crypto.db'
+    SQLITE_LOCATION = './crypto.db'
 
 from dao import *
 if __name__ == '__main__':

@@ -1,0 +1,31 @@
+aspect,prompt
+Regulatory Impact,"Read the following news article and rate the regulatory impact from 1 to 10, where:
+1-2: Extremely negative (e.g., complete ban in major countries)
+3-4: Very negative (e.g., severe restrictions or heavy taxation)
+5-6: Neutral or mixed (e.g., ongoing regulatory discussions with unclear outcome)
+7-8: Positive (e.g., clear regulatory framework that allows operation)
+9-10: Extremely positive (e.g., full legal recognition and supportive regulations)"
+Technological Impact,"Read the following news article and rate the technological impact from 1 to 10, where:
+1-2: Major setback (e.g., critical vulnerability found)
+3-4: Minor problems (e.g., scaling issues or minor bugs)
+5-6: Neutral or expected progress
+7-8: Significant improvement (e.g., successful implementation of a major update)
+9-10: Breakthrough innovation (e.g., solving a fundamental limitation)"
+Market Adoption Impact,"Read the following news article and rate the market adoption impact from 1 to 10, where:
+1-2: Major rejection (e.g., ban by major payment processors)
+3-4: Decreased adoption (e.g., major retailer stops accepting Dogecoin)
+5-6: Neutral or steady state
+7-8: Increased adoption (e.g., new major company starts accepting Dogecoin)
+9-10: Mainstream adoption (e.g., country adopts as legal tender)"
+Macroeconomic Implications,"Read the following news article and rate the macroeconomic implications from 1 to 10, where:
+1-2: Severe negative impact (e.g., causing economic instability)
+3-4: Moderate negative impact (e.g., disrupting certain industries negatively)
+5-6: Neutral or balanced impact
+7-8: Positive impact (e.g., fostering innovation in finance)
+9-10: Transformative positive impact (e.g., solving major economic issues)"
+Overall Sentiment,"Read the following news article and rate the overall sentiment from 1 to 10, where:
+1-2: Extremely negative (e.g., major scandal or loss of faith)
+3-4: Generally negative (e.g., significant challenges or setbacks)
+5-6: Neutral or mixed
+7-8: Positive (e.g., good news or developments)
+9-10: Extremely positive (e.g., major breakthrough or widespread acclaim)"
