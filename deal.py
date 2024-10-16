@@ -261,4 +261,4 @@ if __name__ == '__main__':
     main_thread = Thread(target=main)
     # 启动 main 线程
     main_thread.start()
-    app.run(debug=False, use_reloader=False, host='0.0.0.0', port=5001)  # 设置允许的访问ip
+    app.run(debug=False, use_reloader=False, host='0.0.0.0', port=5000)  # 设置允许的访问ip
