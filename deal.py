@@ -253,6 +253,12 @@ def award():
     # 得到以usdt结算的历史资产
     return query_data()
 
+from one import main
+from threading import Thread
 
 if __name__ == '__main__':
+    # 创建一个线程来运行 main 函数
+    main_thread = Thread(target=main)
+    # 启动 main 线程
+    main_thread.start()
     app.run(debug=False, use_reloader=False, host='0.0.0.0', port=5001)  # 设置允许的访问ip
