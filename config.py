@@ -3,7 +3,7 @@ class Config:
     db_config = {
         'host': 'localhost',
         'user': 'root',
-        'password': 'WJT164673!',
+        'password': '123456',
         'database': 'deal_sys'
     }
     sqlite_corresponding_argument = {

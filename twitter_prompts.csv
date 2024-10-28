@@ -1,0 +1,63 @@
+aspect,prompt
+Virality potential,"You are an expert social media analyst. Your task is to evaluate the Virality Potential of the following tweet on a scale from 0 to 10. The Virality Potential measures how likely the tweet is to be widely shared, liked, retweeted, or commented on, and how quickly it may spread across social media platforms. Consider factors such as the content's emotional appeal, relevance to current events, the influence of the author, and the likelihood of the tweet inciting engagement.
+Please use the following scale to determine the Virality Potential:
+1-2: Very low virality potential. The tweet is unlikely to be shared or noticed by a wide audience. It may lack engagement triggers such as emotional appeal, relevance, or a call to action.
+3-4: Low virality potential. The tweet might generate some engagement within a small or niche audience but is unlikely to spread widely. It may have limited appeal or relevance.
+5-6: Moderate virality potential. The tweet has a decent chance of being shared and discussed within certain circles. It might be relevant or somewhat engaging but lacks elements that would make it go viral.
+7-8: High virality potential. The tweet is likely to gain significant engagement and be shared widely. It has strong elements of appeal, such as emotional content, relevance to trending topics, or is authored by a well-known figure.
+9-10: Very high virality potential. The tweet is highly likely to go viral, spreading rapidly across social media platforms. It contains highly engaging content, is extremely relevant to current events, or is posted by a highly influential figure.
+Evaluate the following tweet and provide a score from 0 to 10 based on the criteria above:"
+Informative value,"You are a content quality analyst. Your task is to evaluate the Informative Value of the following tweet on a scale from 0 to 10. The Informative Value measures how much valuable, relevant, and actionable information the tweet provides about its subject. Consider factors such as the clarity, depth, accuracy, and usefulness of the information presented in the tweet.
+Please use the following scale to determine the Informative Value:
+1-2: Very low informative value. The tweet contains little to no useful information. It may be vague, irrelevant, or lack any meaningful content. 
+3-4: Low informative value. The tweet provides some information, but it is either superficial, partially irrelevant, or lacking in substance. It might mention a topic without giving useful details.
+5-6: Moderate informative value. The tweet contains relevant and somewhat useful information. It provides a basic understanding of the topic but might lack depth, clarity, or detailed insights.
+7-8: High informative value. The tweet delivers clear, relevant, and useful information. It provides good depth and clarity, offering insights that are valuable and actionable for the audience.
+9-10: Very high informative value. The tweet is highly informative, offering detailed, accurate, and deeply insightful information. It is exceptionally useful and provides valuable knowledge or guidance on the topic.
+Evaluate the following tweet and provide a score from 0 to 10 based on the criteria above:"
+Sentiment polarity,"You are an expert sentiment analyst. Your task is to evaluate the Sentiment Polarity of the following tweet on a scale from 0 to 10. Sentiment Polarity measures the emotional tone of the tweet, ranging from extremely negative to extremely positive. Consider the language used, the overall message conveyed, and the emotional impact the tweet is likely to have on its audience.
+Please use the following scale to determine the Sentiment Polarity:
+1-2: Strongly negative sentiment. The tweet expresses a highly negative or critical emotional tone. It may convey anger, frustration, disappointment, or strong disapproval.
+3-4: Moderately negative sentiment. The tweet has a somewhat negative tone. It might express mild criticism, concern, or dissatisfaction, but without intense negativity.
+5: Neutral sentiment. The tweet is emotionally neutral, expressing no clear positive or negative sentiment. It may be factual, objective, or indifferent in tone.
+6-7: Moderately positive sentiment. The tweet has a somewhat positive tone, expressing mild satisfaction, approval, or optimism.
+8-10: Strongly positive sentiment. The tweet conveys a highly positive emotional tone. It may express enthusiasm, happiness, strong approval, or excitement.
+Evaluate the following tweet and provide a score from 0 to 10 based on the criteria above:"
+Impact duration,"You are an expert in market dynamics. Your task is to evaluate the Impact Duration of the following tweet on a scale from 0 to 10. Impact Duration measures how long the tweet is likely to influence its audience or the market. Consider how lasting the effects of the tweet may be, whether the information or sentiment it conveys will have a short-lived impact or a prolonged influence on discussions, opinions, or market trends.
+Please use the following scale to determine the Impact Duration:
+1-2: Very short-term impact. The tweet is likely to have a fleeting effect, with any influence dissipating within a few hours or less. It may be quickly forgotten or overshadowed by other events.
+3-4: Short-term impact. The tweet might influence discussions or market reactions for a day or two, but its effects are expected to diminish relatively quickly.
+5-6: Moderate-term impact. The tweet could sustain its influence for several days to a week. It may contribute to ongoing discussions or influence market trends for a moderate period.
+7-8: Long-term impact. The tweet is likely to have a lasting influence, with effects persisting for weeks or even months. It may be referenced repeatedly and contribute to longer-term trends or sentiments.
+9-10: Very long-term impact. The tweet is expected to have a profound and enduring influence, shaping discussions, opinions, or market trends for months or even years. It may become a significant reference point in its domain.
+Evaluate the following tweet and provide a score from 0 to 10 based on the criteria above:"
+Regulatory Impact,"Read the following news article and rate the regulatory impact from 1 to 10, where:
+1-2: Extremely negative (e.g., complete ban in major countries)
+3-4: Very negative (e.g., severe restrictions or heavy taxation)
+5-6: Neutral or mixed (e.g., ongoing regulatory discussions with unclear outcome)
+7-8: Positive (e.g., clear regulatory framework that allows operation)
+9-10: Extremely positive (e.g., full legal recognition and supportive regulations)"
+Technological Impact,"Read the following news article and rate the technological impact from 1 to 10, where:
+1-2: Major setback (e.g., critical vulnerability found)
+3-4: Minor problems (e.g., scaling issues or minor bugs)
+5-6: Neutral or expected progress
+7-8: Significant improvement (e.g., successful implementation of a major update)
+9-10: Breakthrough innovation (e.g., solving a fundamental limitation)"
+Market Adoption Impact,"Read the following news article and rate the market adoption impact from 1 to 10, where:
+1-2: Major rejection (e.g., ban by major payment processors)
+3-4: Decreased adoption (e.g., major retailer stops accepting Ethereum)
+5-6: Neutral or steady state
+7-8: Increased adoption (e.g., new major company starts accepting Ethereum)
+9-10: Mainstream adoption (e.g., country adopts as legal tender)"
+Macroeconomic Implications,"Read the following news article and rate the macroeconomic implications from 1 to 10, where:
+1-2: Severe negative impact (e.g., causing economic instability)
+3-4: Moderate negative impact (e.g., disrupting certain industries negatively)
+5-6: Neutral or balanced impact
+7-8: Positive impact (e.g., fostering innovation in finance)
+9-10: Transformative positive impact (e.g., solving major economic issues)"
+Overall Sentiment,"Read the following news article and rate the overall sentiment from 1 to 10, where:
+1-2: Extremely negative (e.g., major scandal or loss of faith)
+3-4: Generally negative (e.g., significant challenges or setbacks)
+5-6: Neutral or mixed
+7-8: Positive (e.g., good news or developments)
+9-10: Extremely positive (e.g., major breakthrough or widespread acclaim)"

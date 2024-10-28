@@ -1,0 +1,21 @@
+CREATE TABLE `historical_bars_data3_1h_bian_new` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `symbol` varchar(10) DEFAULT NULL,
+  `utctime` datetime DEFAULT NULL,
+  `unixtime` bigint(20) DEFAULT NULL,
+  `open_price` decimal(20,10) DEFAULT NULL,
+  `high_price` decimal(20,10) DEFAULT NULL,
+  `low_price` decimal(20,10) DEFAULT NULL,
+  `close_price` decimal(20,10) DEFAULT NULL,
+  `volume` decimal(20,10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `wallet_balances` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` datetime NOT NULL,
+  `asset` varchar(10) NOT NULL,
+  `free_balance` decimal(20,8) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
